@@ -1,14 +1,16 @@
-package com.beyondthecode.kotlinmessenger
+package com.beyondthecode.kotlinmessenger.registerlogin
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.widget.Toast
+import com.beyondthecode.kotlinmessenger.R
+import com.beyondthecode.kotlinmessenger.messages.LatestMessagesActivity
+import com.beyondthecode.kotlinmessenger.models.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -16,7 +18,7 @@ import kotlinx.android.synthetic.main.activity_register.*
 import java.util.*
 
 
-const val TAG = "RegisterActivity"
+private const val TAG = "RegisterActivity"
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -82,7 +84,7 @@ class RegisterActivity : AppCompatActivity() {
                     uploadPhotoToFireStorage()
                 }
                 .addOnFailureListener {
-                    Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "Error al crear usuario:  ${it.message}", Toast.LENGTH_SHORT).show()
                 }
         }
     }
@@ -120,9 +122,13 @@ class RegisterActivity : AppCompatActivity() {
         val user = User(uid, txtusername_register.text.toString(), profileImageUrl)
         ref.setValue(user)
             .addOnSuccessListener {
-                Log.d(TAG, "Finally we saved user to Firebaase!")
+                Log.d(TAG, "Finalmente grabamos el usuario en la bd de Firebase!")
+                val intent = Intent(this, LatestMessagesActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+                startActivity(intent)
+            }
+            .addOnFailureListener{
+                Log.d(TAG, "Error al setear el valor en la bd: ${it.message}")
             }
     }
 }
-
-class User(val uid:String, val username:String, val profileImageUrl:String)

@@ -5,7 +5,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".LoginActivity" android:background="@android:color/holo_green_light">
+        tools:context=".registerlogin.LoginActivity" android:background="@android:color/holo_green_light">
 
     <TextView
 
@@ -31,6 +31,7 @@
                 android:id="@+id/txtemail_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="test@gmail.com"
                 android:paddingLeft="16dp"
                 android:ems="10"
                 android:inputType="textEmailAddress"
@@ -49,6 +50,7 @@
                 android:id="@+id/txtpassword_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="123456"
                 android:paddingLeft="16dp"
                 android:ems="10"
                 android:inputType="textEmailAddress"
